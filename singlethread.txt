@@ -1,0 +1,24 @@
+Random interleaving=true
+-------------------------------------------------------------------------------------------------------
+Benchmark                                                             Time             CPU   Iterations
+-------------------------------------------------------------------------------------------------------
+randomBool<RandomBoolSimple<std::mt19937_64>>_mean                 11.6 ns         11.3 ns           10
+randomBool<RandomBoolSimple<xoroshiro128p>>_mean                   3.54 ns         3.28 ns           10
+randomBool<RandomBoolSimple<splitmix64>>_mean                      2.82 ns         2.62 ns           10
+randomBool<RandomBoolSimple<splitmix64_concurrent>>_mean           14.9 ns         14.2 ns           10
+randomBool<RandomBoolSimple<xorshift64s>>_mean                     4.48 ns         4.35 ns           10
+randomBool<RandomBoolSimple<xorshift64s_concurrent>>_mean          17.3 ns         16.4 ns           10
+
+randomBool<RandomBoolLastbit<std::mt19937_64>>_mean                11.6 ns         10.9 ns           10
+randomBool<RandomBoolLastbit<xoroshiro128p>>_mean                  3.57 ns         3.42 ns           10
+randomBool<RandomBoolLastbit<splitmix64>>_mean                     2.60 ns         2.47 ns           10
+randomBool<RandomBoolLastbit<splitmix64_concurrent>>_mean          13.2 ns         12.7 ns           10
+randomBool<RandomBoolLastbit<xorshift64s>>_mean                    4.29 ns         4.05 ns           10
+randomBool<RandomBoolLastbit<xorshift64s_concurrent>>_mean         17.0 ns         16.2 ns           10
+
+randomBool<RandomBoolMask<std::mt19937_64>>_mean                   2.25 ns         2.11 ns           10
+randomBool<RandomBoolMask<xoroshiro128p>>_mean                     2.05 ns         1.93 ns           10
+randomBool<RandomBoolMask<splitmix64>>_mean                        2.09 ns         1.98 ns           10
+randomBool<RandomBoolMask<splitmix64_concurrent>>_mean             2.30 ns         2.21 ns           10
+randomBool<RandomBoolMask<xorshift64s>>_mean                       2.05 ns         1.95 ns           10
+randomBool<RandomBoolMask<xorshift64s_concurrent>>_mean            2.11 ns         1.96 ns           10
