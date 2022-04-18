@@ -14,7 +14,7 @@ void randomBool(benchmark::State& state)
     }
 }
 
-constexpr const size_t NTHREADS = 1;
+constexpr const size_t NTHREADS = 8;
 
 /* Simple method with std distributions */
 BENCHMARK_TEMPLATE(randomBool, RandomBoolSimpleThreadlocal<std::mt19937_64>)->Threads(NTHREADS);
@@ -43,7 +43,10 @@ BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomicThreadlocal<std::mt19937_64>)
 BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomicThreadlocal<xoroshiro128p>)->Threads(NTHREADS);
 BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomicThreadlocal<splitmix64>)->Threads(NTHREADS);
 BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomicThreadlocal<xorshift64s>)->Threads(NTHREADS);
+
 BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomic<splitmix64_concurrent>)->Threads(NTHREADS);
 BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomic<xorshift64s_concurrent>)->Threads(NTHREADS);
+BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomicV2<splitmix64_concurrent>)->Threads(NTHREADS);
+BENCHMARK_TEMPLATE(randomBool, RandomBoolMaskAtomicV2<xorshift64s_concurrent>)->Threads(NTHREADS);
 
 BENCHMARK_MAIN();

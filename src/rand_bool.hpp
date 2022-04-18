@@ -171,6 +171,41 @@ private:
     std::atomic<R> next = prng() | leftmost_bit_mask;
 };
 
+template<typename PRNG>
+class RandomBoolMaskAtomicV2
+{
+public:
+    using R = typename PRNG::result_type;
+
+    bool operator()()
+    {
+        for (;;)
+        {
+            R old_val = current.load(std::memory_order::acquire);
+            if (old_val == 1)
+            {
+                if (!current.compare_exchange_weak(old_val, prng() | leftmost_bit_mask, std::memory_order::release))
+                {
+                    continue;
+                }
+            }
+
+            R new_val = old_val >> 1;
+            if (current.compare_exchange_weak(old_val, new_val, std::memory_order::release, std::memory_order::relaxed))
+            {
+                return old_val & 1;
+            }
+        }
+    }
+
+private:
+    PRNG prng{ std::random_device{}() };
+
+    static constexpr const R leftmost_bit_mask = R{ 1 } << (sizeof(R) * CHAR_BIT - 1); // wrong for mt 32bit
+
+    std::atomic<R> current = prng() | leftmost_bit_mask;
+};
+
 
 template<typename PRNG>
 class RandomBoolMaskAtomicThreadlocal
