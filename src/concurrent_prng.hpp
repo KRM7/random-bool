@@ -19,10 +19,9 @@ public:
 
     result_type operator()() noexcept
     {
+        state_type old_state = state.load(std::memory_order::relaxed);
         for (;;)
         {
-            state_type old_state = state.load(std::memory_order::relaxed);
-
             state_type new_state = old_state;
             new_state ^= new_state >> 12;
             new_state ^= new_state << 25;
@@ -60,7 +59,7 @@ public:
 
     result_type operator()() noexcept
     {
-        result_type z = state += 0x9e3779b97f4a7c15;
+        result_type z = state.fetch_add(0x9e3779b97f4a7c15, std::memory_order::acquire) + 0x9e3779b97f4a7c15;
         z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9;
         z = (z ^ (z >> 27)) * 0x94d049bb133111eb;
         
